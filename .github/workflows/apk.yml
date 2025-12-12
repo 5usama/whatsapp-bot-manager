@@ -1,0 +1,15 @@
+name: APK Build
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - run: npx react-native init . --skip-install
+    - run: npm install
+    - run: cd android && ./gradlew assembleDebug
+    - uses: actions/upload-artifact@v3
+      with:
+        name: app-apk
+        path: android/app/build/outputs/apk/debug/app-debug.apk
